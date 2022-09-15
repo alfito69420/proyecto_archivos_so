@@ -1,18 +1,12 @@
 import javax.swing.*;
+import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
         ArchivoTexto archivoTexto = new ArchivoTexto();
 
-        //archivoTexto.crearArchivo();
-        //archivoTexto.eliminarArchivo();
-        //archivoTexto.escribirArchivo();
-        //archivoTexto.leerArchivo();
-
         int eleccion;
         String salida = null;
-
-        //archivoTexto.altas();
 
         do {
             eleccion = Integer.parseInt(JOptionPane.showInputDialog("1.- Altas " +
@@ -29,6 +23,7 @@ public class Main {
                     break;
 
                 case 3:
+                    archivoTexto.leerArchivo();
                     break;
 
                 case 4:
@@ -38,6 +33,6 @@ public class Main {
                     JOptionPane.showMessageDialog(null, "Debe elegir una opcion valida.");
             }
             salida = JOptionPane.showInputDialog("¿Hacer otro movimiento?");
-        } while (salida.equalsIgnoreCase("No"));
+        } while (salida.equalsIgnoreCase("Si"));
     }//cierra el metodo
 }//cierra la clase
