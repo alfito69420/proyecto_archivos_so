@@ -4,14 +4,11 @@ import java.util.Formatter;
 
 public class ArchivoTexto {
 
-    FileReader leer;
     FileWriter escribir;
     PrintWriter linea;
 
     FileReader fr;
     BufferedReader br;
-
-    Formatter fmt = new Formatter();
 
     private String nombre = "", cadena;
     private int numeroControl, semestre;
@@ -24,6 +21,24 @@ public class ArchivoTexto {
         noAcreditados = new File("noAcreditados.txt");
 
         if (!acreditados.exists() && !noAcreditados.exists()) { //  Si no existe...
+            if(!acreditados.exists() || !noAcreditados.exists()) {
+                try {
+                    acreditados.createNewFile();
+                    noAcreditados.createNewFile();
+
+                    formulario();
+                    seleccionarArchivo();
+                } catch (IOException e) {
+                    e.printStackTrace(System.out);
+                }
+            } else {
+                try {
+                    formulario();
+                    seleccionarArchivo();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             try {
                 acreditados.createNewFile();
                 noAcreditados.createNewFile();
@@ -70,7 +85,7 @@ public class ArchivoTexto {
             if (promedio >= 0 && promedio <= 69) {  //  No acreditado
                 escribir = new FileWriter(noAcreditados, true);
                 linea = new PrintWriter(escribir);
-                linea.println(String.format("%30s %20s %20s %20s", nombre, numeroControl, semestre, promedio));
+                linea.println(String.format("%20s %20s %20s %20s", nombre, numeroControl, semestre, promedio));
 
                 linea.close();
                 escribir.close();
@@ -131,6 +146,10 @@ public class ArchivoTexto {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }//cierra el metodo
+
+    public void buscar(){
+
     }//cierra el metodo
 }//cierra la clase
 
