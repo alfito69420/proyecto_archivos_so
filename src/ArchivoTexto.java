@@ -43,7 +43,7 @@ public class ArchivoTexto {
         }
     }//cierra el metodo
 
-    public void formulario(){
+    public void formulario() {
         nombre = JOptionPane.showInputDialog(null, "Ingresa el nombre: "
                 , "Solicitando datos", JOptionPane.QUESTION_MESSAGE);
         numeroControl = Integer.parseInt(JOptionPane.showInputDialog(null,
@@ -61,7 +61,7 @@ public class ArchivoTexto {
                 escribir = new FileWriter(acreditados, true);
                 linea = new PrintWriter(escribir);
 
-                linea.println(String.format("%20s %20s %20s %20s",nombre,numeroControl,semestre,promedio));
+                linea.println(String.format("%20s %20s %20s %20s", nombre, numeroControl, semestre, promedio));
 
                 linea.close();
                 escribir.close();
@@ -70,7 +70,7 @@ public class ArchivoTexto {
             if (promedio >= 0 && promedio <= 69) {  //  No acreditado
                 escribir = new FileWriter(noAcreditados, true);
                 linea = new PrintWriter(escribir);
-                linea.println(String.format("%30s %20s %20s %20s",nombre,numeroControl,semestre,promedio));
+                linea.println(String.format("%30s %20s %20s %20s", nombre, numeroControl, semestre, promedio));
 
                 linea.close();
                 escribir.close();
@@ -93,52 +93,10 @@ public class ArchivoTexto {
 
         switch (mostrar) {
             case 1: //  Solo acreditados
-                //lectura(acreditados);
-                try {
-                     fr = new FileReader(acreditados);
-                     br = new BufferedReader(fr);
-
-                    cadena = "";
-                    while (cadena != null) {
-                        try {
-                            cadena = br.readLine();
-                            if(cadena != null){
-                                System.out.println(cadena);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    br.close();
-                    fr.close();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                lectura("acreditados.txt");
                 break;
             case 2: //  Solo no acreditados
-                //lectura(noAcreditados);
-                try {
-                     fr = new FileReader(noAcreditados);
-                     br = new BufferedReader(fr);
-
-                    cadena = "";
-                    while (cadena != null) {
-                        try {
-                            cadena = br.readLine();
-                            if(cadena != null){
-                                System.out.println(cadena);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    br.close();
-                    fr.close();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                lectura("noAcreditados.txt");
                 break;
             case 3:
                 break;
@@ -148,28 +106,33 @@ public class ArchivoTexto {
         }
     }//cierra el metodo
 
-    public void lectura(File file) {
+    public void lectura(String file) {
         String contenido;
         String cadenaCache = "";
+
         try {
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+            fr = new FileReader(file);
+            br = new BufferedReader(fr);
 
-            contenido = br.readLine();
-
-            while (contenido != null) {
-                System.out.println(contenido);
-                contenido = br.readLine();
+            cadena = "";
+            while (cadena != null) {
+                try {
+                    cadena = br.readLine();
+                    if (cadena != null) {
+                        System.out.println(cadena);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            br.close();
+            fr.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }//cierra el metodo
 }//cierra la clase
-
-
-
 
 
     /*public void eliminarArchivo() {
@@ -191,3 +154,26 @@ public class ArchivoTexto {
             e.printStackTrace(System.out);
         }
     }//cierra el metodo*/
+
+
+/*try {
+                    fr = new FileReader(acreditados);
+                    br = new BufferedReader(fr);
+
+                    cadena = "";
+                    while (cadena != null) {
+                        try {
+                            cadena = br.readLine();
+                            if (cadena != null) {
+                                System.out.println(cadena);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    br.close();
+                    fr.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
