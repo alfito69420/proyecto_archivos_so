@@ -1,6 +1,7 @@
+import jdk.swing.interop.SwingInterOpUtils;
+
 import javax.swing.*;
 import java.io.*;
-import java.util.Formatter;
 
 public class ArchivoTexto {
 
@@ -65,7 +66,6 @@ public class ArchivoTexto {
                 "Ingresa el numero de control: ", "Solicitando datos", 3));
         semestre = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa el semestre: "
                 , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
-
         promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
                 , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
     }//cierra el metodo
@@ -76,7 +76,7 @@ public class ArchivoTexto {
                 escribir = new FileWriter(acreditados, true);
                 linea = new PrintWriter(escribir);
 
-                linea.println(String.format("%20s %20s %20s %20s", nombre, numeroControl, semestre, promedio));
+                linea.println(String.format("%20s %20s %20s %20s", nombre+" |", numeroControl+" |", semestre+" |", promedio+" |"));
 
                 linea.close();
                 escribir.close();
@@ -85,7 +85,7 @@ public class ArchivoTexto {
             if (promedio >= 0 && promedio <= 69) {  //  No acreditado
                 escribir = new FileWriter(noAcreditados, true);
                 linea = new PrintWriter(escribir);
-                linea.println(String.format("%20s %20s %20s %20s", nombre, numeroControl, semestre, promedio));
+                linea.println(String.format("%20s %20s %20s %20s", nombre+" |", numeroControl+" |", semestre+" |", promedio+" |"));
 
                 linea.close();
                 escribir.close();
@@ -104,16 +104,25 @@ public class ArchivoTexto {
         mostrar = Integer.parseInt(JOptionPane.showInputDialog("Que desea mostrar? " +
                 "\n1.- Acreditados " +
                 "\n2.- No acreditados " +
-                "\n3 Todos"));
+                "\n3.- Todos"));
 
         switch (mostrar) {
             case 1: //  Solo acreditados
+                System.out.println("\nALUMNOS ACREDITADOS");
+                System.out.println("***********************************************************************************");
+                System.out.println(String.format("%20s %20s %20s %20s", "Nombre |", "Numero de control |", "Semestre |", "Promedio |"));
+                System.out.println("***********************************************************************************");
                 lectura("acreditados.txt");
                 break;
             case 2: //  Solo no acreditados
+                System.out.println("\nALUMNOS NO ACREDITADOS");
+                System.out.println("***********************************************************************************");
+                System.out.println(String.format("%20s %20s %20s %20s", "Nombre |", "Numero de control |", "Semestre |", "Promedio |"));
+                System.out.println("***********************************************************************************");
                 lectura("noAcreditados.txt");
                 break;
-            case 3:
+            case 3: //  Todos
+                lecturaTodo("acreditados.txt", "noAcreditados.txt");
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Debe elegir una opción dentro del menu.");
@@ -135,6 +144,7 @@ public class ArchivoTexto {
                     cadena = br.readLine();
                     if (cadena != null) {
                         System.out.println(cadena);
+                        System.out.println("-----------------------------------------------------------------------------------");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -147,6 +157,64 @@ public class ArchivoTexto {
             e.printStackTrace();
         }
     }//cierra el metodo
+
+    public void lecturaTodo(String fileAcreditados, String fileNoAcreditados){
+        //  Acreditados
+        System.out.println("\nALUMNOS ACREDITADOS");
+        System.out.println("***********************************************************************************");
+        System.out.println(String.format("%20s %20s %20s %20s", "Nombre |", "Numero de control |", "Semestre |", "Promedio |"));
+        System.out.println("***********************************************************************************");
+        try {
+            fr = new FileReader(fileAcreditados);
+            br = new BufferedReader(fr);
+
+            cadena = "";
+            while (cadena != null) {
+                try {
+                    cadena = br.readLine();
+                    if (cadena != null) {
+                        System.out.println(cadena);
+                        System.out.println("-----------------------------------------------------------------------------------");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            br.close();
+            fr.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\nALUMNOS NO ACREDITADOS");
+        System.out.println("***********************************************************************************");
+        System.out.println(String.format("%20s %20s %20s %20s", "Nombre |", "Numero de control |", "Semestre |", "Promedio |"));
+        System.out.println("***********************************************************************************");
+        try {
+            fr = new FileReader(fileNoAcreditados);
+            br = new BufferedReader(fr);
+
+            cadena = "";
+            while (cadena != null) {
+                try {
+                    cadena = br.readLine();
+                    if (cadena != null) {
+                        System.out.println(cadena);
+                        System.out.println("-----------------------------------------------------------------------------------");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            br.close();
+            fr.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//cierra el metodo
+
 
     public void buscar(){
 
