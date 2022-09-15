@@ -32,11 +32,12 @@ public class Main {
                     break;
 
                 case 4:
+                    System.exit(0);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Debe elegir una opcion valida.");
             }
-            salida = JOptionPane.showInputDialog("Esta seguro que desea salir?");
+            salida = JOptionPane.showInputDialog("¿Hacer otro movimiento?");
         } while (salida.equalsIgnoreCase("No"));
     }//cierra el metodo
 }//cierra la clase

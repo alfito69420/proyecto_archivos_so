@@ -3,28 +3,25 @@ import java.io.*;
 
 public class ArchivoTexto {
 
-    File archivo;
     FileReader leer;
     FileWriter escribir;
     PrintWriter linea;
 
-    String cadena;
-
-    private String nombre = "";
-
-    private int numeroControl;
-    private int semestre;
+    private String nombre = "", cadena;
+    private int numeroControl, semestre;
     private double promedio;
-    File acreditados;
-    File noAcreditados;
+    File acreditados, noAcreditados;
 
     public void altas() {
-        archivo = new File("archivo.txt");
+        acreditados = new File("acreditados.txt");
+        noAcreditados = new File("noAcreditados.txt");
         String cadenaCache = "";
 
-        if (!archivo.exists()) {
+        if (/*!archivo.exists()*/!acreditados.exists() && !noAcreditados.exists()) {
             try {
-                archivo.createNewFile();
+                //archivo.createNewFile();
+                acreditados.createNewFile();
+                noAcreditados.createNewFile();
 
                 nombre = JOptionPane.showInputDialog(null, "Ingresa el nombre: "
                         , "Solicitando datos", 3);
@@ -36,16 +33,7 @@ public class ArchivoTexto {
                 promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
                         , "Solicitando datos", 3));
 
-                escribir = new FileWriter(archivo, true);
-                linea = new PrintWriter(escribir);
-
-                linea.println(nombre);
-                linea.println(numeroControl);
-                linea.println(semestre);
-                linea.println(promedio);
-
-                linea.close();
-                escribir.close();
+                seleccionarArchivo();
 
             } catch (IOException e) {
                 e.printStackTrace(System.out);
@@ -62,16 +50,7 @@ public class ArchivoTexto {
                 promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
                         , "Solicitando datos", 3));
 
-                escribir = new FileWriter(archivo, true);
-                linea = new PrintWriter(escribir);
-
-                linea.println(nombre);
-                linea.println(numeroControl);
-                linea.println(semestre);
-                linea.println(promedio);
-
-                linea.close();
-                escribir.close();
+                seleccionarArchivo();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -112,16 +91,49 @@ public class ArchivoTexto {
 
     }//cierra el metodo
 
-    public void eliminarArchivo() {
+    public void seleccionarArchivo() {
+
+        try {
+            if (promedio >= 70 && promedio <= 100) {  //  acreditado
+                escribir = new FileWriter(acreditados, true);
+                linea = new PrintWriter(escribir);
+
+                linea.println(nombre);
+                linea.println(numeroControl);
+                linea.println(semestre);
+                linea.println(promedio);
+
+                linea.close();
+                escribir.close();
+            }
+
+            if (promedio >= 0 && promedio <= 69) {  //  No acreditado
+                escribir = new FileWriter(noAcreditados, true);
+                linea = new PrintWriter(escribir);
+
+                linea.println(nombre);
+                linea.println(numeroControl);
+                linea.println(semestre);
+                linea.println(promedio);
+
+                linea.close();
+                escribir.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//cierra el metodo
+
+    /*public void eliminarArchivo() {
         if (archivo.delete()) {
             System.out.println("Eliminado con exito");
         } else {
             System.out.println("Error, no se elimino");
         }
-    }//cierra el metodo
+    }//cierra el metodo*/
 
     //  ESCRITURA DEL ARCHIVO
-    public void escribirArchivo() {
+    /*public void escribirArchivo() {
         try {
             FileWriter fw = new FileWriter(archivo);
             fw.write("Saludos");
@@ -130,10 +142,10 @@ public class ArchivoTexto {
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
-    }//cierra el metodo
+    }//cierra el metodo*/
 
     //  LECTURA DEL ARCHIVO
-    public void leerArchivo() {
+    /*public void leerArchivo() {
         String contenido;
 
         try {
@@ -150,5 +162,5 @@ public class ArchivoTexto {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }//cierra el metodo
+    }//cierra el metodo*/
 }//cierra la clase
