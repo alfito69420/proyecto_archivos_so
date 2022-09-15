@@ -8,6 +8,9 @@ public class ArchivoTexto {
     FileWriter escribir;
     PrintWriter linea;
 
+    FileReader fr;
+    BufferedReader br;
+
     Formatter fmt = new Formatter();
 
     private String nombre = "", cadena;
@@ -25,33 +28,14 @@ public class ArchivoTexto {
                 acreditados.createNewFile();
                 noAcreditados.createNewFile();
 
-                nombre = JOptionPane.showInputDialog(null, "Ingresa el nombre: "
-                        , "Solicitando datos", JOptionPane.QUESTION_MESSAGE);
-                numeroControl = Integer.parseInt(JOptionPane.showInputDialog(null,
-                        "Ingresa el numero de control: ", "Solicitando datos", 3));
-                semestre = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa el semestre: "
-                        , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
-
-                promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
-                        , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
-
+                formulario();
                 seleccionarArchivo();
-
             } catch (IOException e) {
                 e.printStackTrace(System.out);
             }
         } else { // Si ya existe...
             try {
-                nombre = JOptionPane.showInputDialog(null, "Ingresa el nombre: "
-                        , "Solicitando datos", JOptionPane.QUESTION_MESSAGE);
-                numeroControl = Integer.parseInt(JOptionPane.showInputDialog(null,
-                        "Ingresa el numero de control: ", "Solicitando datos", 3));
-                semestre = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa el semestre: "
-                        , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
-
-                promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
-                        , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
-
+                formulario();
                 seleccionarArchivo();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -59,18 +43,23 @@ public class ArchivoTexto {
         }
     }//cierra el metodo
 
+    public void formulario(){
+        nombre = JOptionPane.showInputDialog(null, "Ingresa el nombre: "
+                , "Solicitando datos", JOptionPane.QUESTION_MESSAGE);
+        numeroControl = Integer.parseInt(JOptionPane.showInputDialog(null,
+                "Ingresa el numero de control: ", "Solicitando datos", 3));
+        semestre = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa el semestre: "
+                , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
+
+        promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
+                , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
+    }//cierra el metodo
+
     public void seleccionarArchivo() {
         try {
             if (promedio >= 70 && promedio <= 100) {  //  acreditado
                 escribir = new FileWriter(acreditados, true);
                 linea = new PrintWriter(escribir);
-                //linea.println("Nombre \tSemestre \tNumero de control \tPromedio");
-                //linea.println(fmt.format("%20s %20s %20s %20s",nombre,numeroControl,semestre,promedio));
-
-                /*linea.println(nombre);
-                linea.println(numeroControl);
-                linea.println(semestre);
-                linea.println(promedio);*/
 
                 linea.println(String.format("%20s %20s %20s %20s",nombre,numeroControl,semestre,promedio));
 
@@ -81,15 +70,7 @@ public class ArchivoTexto {
             if (promedio >= 0 && promedio <= 69) {  //  No acreditado
                 escribir = new FileWriter(noAcreditados, true);
                 linea = new PrintWriter(escribir);
-                //linea.println("Nombre \tSemestre \tNumero de control \tPromedio");
-
-                /*linea.println(nombre);
-                linea.println(numeroControl);
-                linea.println(semestre);
-                linea.println(promedio);*/
                 linea.println(String.format("%30s %20s %20s %20s",nombre,numeroControl,semestre,promedio));
-                //linea.println(fmt.format("%20s %20s %20s %20s",nombre,numeroControl,semestre,promedio));
-                //linea.println(String.format("%20s %20s %20s %20s",nombre,numeroControl,semestre,promedio));
 
                 linea.close();
                 escribir.close();
@@ -114,8 +95,8 @@ public class ArchivoTexto {
             case 1: //  Solo acreditados
                 //lectura(acreditados);
                 try {
-                    FileReader fr = new FileReader("acreditados.txt");
-                    BufferedReader br = new BufferedReader(fr);
+                     fr = new FileReader(acreditados);
+                     br = new BufferedReader(fr);
 
                     cadena = "";
                     while (cadena != null) {
@@ -138,8 +119,8 @@ public class ArchivoTexto {
             case 2: //  Solo no acreditados
                 //lectura(noAcreditados);
                 try {
-                    FileReader fr = new FileReader("noAcreditados.txt");
-                    BufferedReader br = new BufferedReader(fr);
+                     fr = new FileReader(noAcreditados);
+                     br = new BufferedReader(fr);
 
                     cadena = "";
                     while (cadena != null) {
