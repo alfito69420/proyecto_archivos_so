@@ -20,6 +20,19 @@ public class Main {
                     break;
 
                 case 2:
+                    int buscar = Integer.parseInt(JOptionPane.showInputDialog("Buscar por: " +
+                            "\n1.- Nombre" +
+                            "\n2.- Numero de control"));
+                    switch (buscar){
+                        case 1:
+                            archivoTexto.buscar(buscar);
+                            break;
+                        case 2:
+                            archivoTexto.buscar(buscar);
+                            break;
+                        default: JOptionPane.showMessageDialog(null, "Debe elegir una de las " +
+                                "opciones disponibles.");
+                    }
                     break;
 
                 case 3:

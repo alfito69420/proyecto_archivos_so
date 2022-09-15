@@ -215,9 +215,104 @@ public class ArchivoTexto {
         }
     }//cierra el metodo
 
+    public void buscar(int buscar){
+        String nombre_buscar;
+        String numCtrl_buscar;
+        boolean encontrado = false;
 
-    public void buscar(){
+        if(buscar == 1){
+            nombre_buscar = JOptionPane.showInputDialog("Ingrese el nombre: ");
+            //  ACREDITADOS
+            try {
+                fr = new FileReader("acreditados.txt");
+                br = new BufferedReader(fr);
 
+                cadena = "";
+                while ((cadena = br.readLine()) != null) {
+                    if(cadena.indexOf(nombre_buscar) != -1){
+                        System.out.println("Se encontro el registro en el archivo de Acreditados: "+cadena);
+                        encontrado = true;
+                    }
+                }
+                if(encontrado == false){
+                    System.out.println("El registro no existe en el archivo de Acreditados.");
+                }
+                br.close();
+                fr.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //  NO ACREDITADOS
+            try {
+                fr = new FileReader("noAcreditados.txt");
+                br = new BufferedReader(fr);
+
+                cadena = "";
+                while ((cadena = br.readLine()) != null) {
+                    if(cadena.indexOf(nombre_buscar) != -1){
+                        System.out.println("Se encontro el registro en el archivo de No acreditados: "+cadena);
+                        encontrado = true;
+                    }
+                }
+                if(encontrado == false){
+                    System.out.println("El registro no existe en el archivo de No acreditados.");
+                }
+                br.close();
+                fr.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(buscar == 2){
+            numCtrl_buscar = JOptionPane.showInputDialog("Ingrese el numero de control: ");
+            //  ACREDITADOS
+            try {
+                fr = new FileReader("acreditados.txt");
+                br = new BufferedReader(fr);
+
+                cadena = "";
+                while ((cadena = br.readLine()) != null) {
+                    if(cadena.indexOf(numCtrl_buscar) != -1){
+                        System.out.println("Se encontro el registro en el archivo de Acreditados: "+cadena);
+                        encontrado = true;
+                    }
+                }
+                if(encontrado == false){
+                    System.out.println("El registro no existe en el archivo de Acreditados.");
+                }
+                br.close();
+                fr.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //  NO ACREDITADOS
+            try {
+                fr = new FileReader("noAcreditados.txt");
+                br = new BufferedReader(fr);
+
+                cadena = "";
+                while ((cadena = br.readLine()) != null) {
+                    if(cadena.indexOf(numCtrl_buscar) != -1){
+                        System.out.println("Se encontro el registro en el archivo de No acreditados: "+cadena);
+                        encontrado = true;
+                    }
+                }
+                if(encontrado == false){
+                    System.out.println("El registro no existe en el archivo de No acreditados.");
+                }
+                br.close();
+                fr.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Valor no encontrado.");
+        }
     }//cierra el metodo
 }//cierra la clase
 
