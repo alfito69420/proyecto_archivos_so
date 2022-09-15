@@ -1,5 +1,3 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import javax.swing.*;
 import java.io.*;
 
@@ -13,7 +11,7 @@ public class ArchivoTexto {
 
     private String nombre = "", cadena;
     private int numeroControl, semestre;
-    private double promedio;
+    private String promedio;
     File acreditados, noAcreditados;
 
     public void altas() {
@@ -66,13 +64,16 @@ public class ArchivoTexto {
                 "Ingresa el numero de control: ", "Solicitando datos", 3));
         semestre = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingresa el semestre: "
                 , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
-        promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
-                , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));
+       /* promedio = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingresa el promedio: "
+                , "Solicitando datos", JOptionPane.QUESTION_MESSAGE));*/
+
+        promedio = JOptionPane.showInputDialog(null, "Ingresa el promedio: "
+                , "Solicitando datos", JOptionPane.QUESTION_MESSAGE);
     }//cierra el metodo
 
     public void seleccionarArchivo() {
         try {
-            if (promedio >= 70 && promedio <= 100) {  //  acreditado
+            if (Integer.parseInt(promedio) >= 70 && Integer.parseInt(promedio) <= 100) {  //  acreditado
                 escribir = new FileWriter(acreditados, true);
                 linea = new PrintWriter(escribir);
 
@@ -82,7 +83,7 @@ public class ArchivoTexto {
                 escribir.close();
             }
 
-            if (promedio >= 0 && promedio <= 69) {  //  No acreditado
+            if (Integer.parseInt(promedio) >= 0 && Integer.parseInt(promedio) <= 69) {  //  No acreditado
                 escribir = new FileWriter(noAcreditados, true);
                 linea = new PrintWriter(escribir);
                 linea.println(String.format("%20s %20s %20s %20s", nombre+" |", numeroControl+" |", semestre+" |", promedio+" |"));
@@ -232,6 +233,12 @@ public class ArchivoTexto {
                     if(cadena.indexOf(nombre_buscar) != -1){
                         System.out.println("Se encontro el registro en el archivo de Acreditados: "+cadena);
                         encontrado = true;
+                        //double nuevo = Double.parseDouble(JOptionPane.showInputDialog("Dijite el nuevo promedio: "));
+                        String nuevo = JOptionPane.showInputDialog("Dijite el nuevo promedio: ");
+                        //String nuevoString = String.valueOf(nuevo);
+
+                        modificar(nuevo);
+                        //modificar(nuevo);
                     }
                 }
                 if(encontrado == false){
@@ -306,12 +313,40 @@ public class ArchivoTexto {
                 }
                 br.close();
                 fr.close();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Valor no encontrado.");
+        }
+    }//cierra el metodo
+
+    public void modificar(String nuevo) {
+        //String line;
+        //String vieja = promedio;
+        String input = "";
+
+        try {
+            // input the (modified) file content to the StringBuffer "input"
+            BufferedReader file = new BufferedReader(new FileReader("acreditados.txt"));
+            StringBuffer inputBuffer = new StringBuffer();
+            String line;
+
+            while ((line = file.readLine()) != null) {
+                System.out.println(line.replace(promedio, nuevo));// replace the line here
+
+                inputBuffer.append(line);
+                inputBuffer.append('\n');
+            }
+            file.close();
+
+            // write the new string with the replaced line OVER the same file
+            FileOutputStream fileOut = new FileOutputStream("acreditados.txt");
+            fileOut.write(inputBuffer.toString().getBytes());
+            fileOut.close();
+
+        } catch (Exception e) {
+            System.out.println("Problem reading file.");
         }
     }//cierra el metodo
 }//cierra la clase
